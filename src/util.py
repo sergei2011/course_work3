@@ -31,17 +31,22 @@ def time(date):
     return ( date_time_obj.strftime("%d.%m.%Y"))
 
 def from_out(trans):
-    if trans["from"]:
-       sender = trans["form"]
+    """выод исходящего счета со скрытыми цифрами"""
+    if "from" in trans:
+        if trans['from'][0] == 'С':
+            sender = trans['from'][:-20] + '**** **** **** **** ' + trans['from'][-4:]
+        else:
+            sender = trans['from'][:-12] + ' ' + trans['from'][-12:-10] + '** **** ' + trans['from'][-4:]
     else:
-        sender = []
+        sender = ''
     return sender
 
+def to_in(trans):
+    """вывод принимающего счета со скрытыми цифрами"""
+    if trans['to'][0] == 'С':
+        receiver = trans['to'][:-20] + '**** **** **** **** ' + trans['to'][-4:]
+    else:
+        receiver = trans['to'][:-12] + ' ' + trans['to'][-12:-10] + '** **** ' + trans['to'][-4:]
 
+    return receiver
 
-#q = open_list('../operations.json')
-#w = sort_execut(q)
-#e = sort_list(w)
-#last_pay = five_last(e)
-#t = last_pay[1]['date']
-#time(t)
